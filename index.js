@@ -2,13 +2,22 @@
 const axios = require("axios")
 const inquirer = require("inquirer")
 const fs = require("fs")
+const util = require("util");
+const writeFileAsync = util.promisify(fs.writeFile);
 // Get URl for git hub call
+
 inquirer
   .prompt([
     {
-    type: "input",
+    type: "list",
     message: "what is your favorite color",
+    choices: ["green", "blue", "pink", "red"],
     name: "color"
+    },
+    {
+    type: "input",
+    message: "What is your name",
+    name: "name"
     },
     {
     type: "input",
@@ -28,24 +37,85 @@ inquirer
 
 
   ])
-  .then(function({ color, username, bio, location }) {
-    //   const { } = data
-    const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
+  .then(function({ color, name, username, bio, location }) {
+      //   const { } = data
+      const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
+    //   const gitHubLink = `https://github.com/${username}`
+      
+      console.log(color)
+      console.log(username)
+      axios
+      .get(queryUrl)
+      .then(function(res) {
+        const data = res.data
+        // for (const element of data) {
+        //     console.log(element);}
+        data.forEach(element => console.log(element));
+        // const repoList = res.data.map(repo => repo.name)
+        // console.log(repoList.length)
+        const html = `<!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="ie=edge">
+          <title>Document</title>
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        </head>
+        <body>
+        
+          <div class="container">
+            
+            <div class="jumbotron">
+              <div class="text-center">
+                <img style="border-radius: 300px;" src="https://picsum.photos/300/300" class="rounded" alt="...">
+              </div>
+              <h1 style="text-align: center;" class="display-4">Hello</h1>
+              <p style="text-align: center;" class="lead">My name is ${name}</p>
+              <hr class="my-4">
+              <p style="text-align: center; margin: 10px;"><a href="">Location</a> <a href="https://github.com/${username}">Github</a</p>
+              <div style="text-align: center;" class="row">
+                <a style="padding: 25px;" class="col-sm-5" class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                <div class="col-sm-2"></div>
+                <a style="padding: 25px;" class="col-sm-5" class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+              </div>
+        
+              <div style="text-align: center;" class="row">
+                <a style="padding: 25px;" class="col-sm-5" class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                <div class="col-sm-2"></div>
+                <a style="padding: 25px;" class="col-sm-5" class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+              </div>
+            </div>   
+          </div>
+          
+        </body>
+        </html>`
+        writeFileAsync("index.html", html)
+    });
     
- 
-  console.log(color)
-  console.log(username)
-    axios
-    .get(queryUrl)
-    .then(function(res) {
-        // if(error){
-        //     throw error
+   
+    })
+
+          
+      
+            
+        // for (const i = 0; i < res.length; i++){
+        //     console.log(res[1])
         // }
-        const userInfo = res.data.map(repo => repo.name)
-        console.log(userInfo)
-        console.log(userInfo[1])
-        // res.data.forEach(function(userInfo){
-        //     if(res.data.private === false){
+        // throw error
+        // console.log(res)
+        // const userInfo = res.data.map(repo => repo.private)
+        // console.log(userInfo)
+        
+        // console.log(res.data)
+        // for (var i = 0; i < res.length; i++){
+        //     console.log(res[i])
+        // }
+
+        // console.log(userInfo[1])
+        // const info = res.data
+        // info.forEach(function(userInfo){
+        //     if(info.private === false){
         //         console.log(userInfo)
         //     }
         //     else{
@@ -58,9 +128,6 @@ inquirer
     // fs.writeFile("repo.txt", repoList.toString(), function(error){
         
     // })
-        
-    });
-    });
 // Set up wnquirer prompt 
 // Use enquirer and git hub url to build the axios
 // Create a var html and template html using template literals to fill in info from axios
