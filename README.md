@@ -12,8 +12,8 @@ I wrote this program in order to be able to easily type in members' github usern
 ![loadedpage2.png](./Assets/loadedpage2.png)
 
 ## Some code snippet:
-![codesnippet1.png](.Assets/codesnippet1.png)
-![codesnippet2.png](.Assets/codesnippet2.png)
+![codesnippet1.png](./Assets/codesnippet1.png)
+![codesnippet2.png](./Assets/codesnippet2.png)
 
 ## Built with
 * VScode
