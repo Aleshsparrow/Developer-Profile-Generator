@@ -1,7 +1,8 @@
 // Set up dependents (axios, inquirer, fs)
 const axios = require("axios")
 const inquirer = require("inquirer")
-const fs = require("fs")
+const fs = require("fs"), 
+convertFactory = require('electron-html-to');
 const util = require("util");
 const writeFileAsync = util.promisify(fs.writeFile);
 // Get URl for git hub call
@@ -88,10 +89,29 @@ inquirer
         </body>
         </html>`
         writeFileAsync("index.html", html)
+        
     });
+    
     
    
     })
+    .then(html => {
+      const conversion = convertFactory({
+        converterPath: convertFactory.converters.PDF
+      });
+      conversion({ html }, function(err, result) {
+        if (err) {
+          return console.error(err);
+        }
+        result.stream.pipe(
+          fs.createWriteStream(path.join(__dirname, "resume.pdf")),
+          
+        );
+        conversion.kill();
+      });
+      open(path.join(process.cwd(), "resume.pdf"));
+    });
+
 
           
       
