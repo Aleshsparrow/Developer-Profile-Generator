@@ -13,33 +13,17 @@ inquirer
     message: "what is your favorite color",
     choices: ["green", "blue", "pink", "red"],
     name: "color"
-    },
-    {
-    type: "input",
-    message: "What is your name",
-    name: "name"
-    },
+    },    
     {
     type: "input",
     message: "What is your GitHub username",
     name: "username"
     },
-    {
-    type: "input",
-    message: "Tell us a little about yourself",
-    name: "bio"
-    },
-    {
-    type: "input",
-    message: "What is your current location",
-    name: "location"
-    },
-
-
+   
   ])
-  .then(function({ color, name, username, bio, location }) {
+  .then(function({ color, username}) {
       //   const { } = data
-      const queryUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
+      const queryUrl = `https://api.github.com/users/${username}`;
     //   const gitHubLink = `https://github.com/${username}`
       
       console.log(color)
@@ -48,39 +32,19 @@ inquirer
       .get(queryUrl)
       .then(function(res) {
         const data = res.data
+        console.log(data)
+        // const data = res.data
+        // for (var i = 0; i < data.length; i++){
+        //   console.log(data[i])
+        // }
         // for (const element of data) {
         //     console.log(element);}
-        data.forEach(element => console.log(element));
+        // data.forEach(element => console.log(element));
         // const repoList = res.data.map(repo => repo.name)
+        // console.log(repoList)
         // console.log(repoList.length)
 
-        const colors = {
-          green: {
-            wrapperBackground: "#E6E1C3",
-            headerBackground: "#C1C72C",
-            headerColor: "black",
-            photoBorderColor: "#black"
-          },
-          blue: {
-            wrapperBackground: "#5F64D3",
-            headerBackground: "#26175A",
-            headerColor: "white",
-            photoBorderColor: "#73448C"
-          },
-          pink: {
-            wrapperBackground: "#879CDF",
-            headerBackground: "#FF8374",
-            headerColor: "white",
-            photoBorderColor: "#FEE24C"
-          },
-          red: {
-            wrapperBackground: "#DE9967",
-            headerBackground: "#870603",
-            headerColor: "white",
-            photoBorderColor: "white"
-          }
-        };
-
+        
         const html = `<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -96,24 +60,28 @@ inquirer
             
             <div  style="background-color: white;" class="jumbotron">
               <div class="text-center">
-                <img style="border-radius: 300px;" src="https://picsum.photos/300/300" class="rounded" alt="...">
+                <img style="border-radius: 300px;" src="${data.avatar_url}" class="rounded" alt="Profile pic">
               </div>
               <h1 style="text-align: center;" class="display-4">Hello</h1>
-              <p style="text-align: center;" class="lead">My name is ${name}</p>
+              <p style="text-align: center;" class="lead">My name is ${data.name}</p>
               <hr class="my-4">
-              <p style="color: ${color}; text-align: center; margin: 15px;"><a href="">Location</a> <a href="https://github.com/${username}">Github</a></p>
-              
+              <p style="color: ${color}; text-align: center; margin: 15px;"><a style="color: ${color};" href="">${data.location}</a> <a style="color: ${color};" href="https://github.com/${username}">Github</a></p>
+              <br>
+              <h4 style="text-align: center;">${data.bio}</h4>
               <div style="text-align: center; color: white; " class="row">
-                <h5 style="padding: 15px; background-color: ${color};" class="col-sm-5">Learn more</h5>
+                <h5 style="padding: 15px; background-color: ${color};" class="col-sm-5">Public Repositories ${data.public_repos}</h5>
                 <div class="col-sm-2"></div>
-                <h5 style="padding: 15px; background-color: ${color};" class="col-sm-5">Learn more</h5>
+                <h5 style="padding: 15px; background-color: ${color};" class="col-sm-5">Followers: ${data.followers}</h5>
               </div>
         
-              <div style="text-align: center;" class="row">
-                <h5 style="padding: 15px; background-color: ${color};" class="col-sm-5">Learn more</h5>
+              <div style="text-align: center; color: white;" class="row">
+                <h5 style="padding: 15px; background-color: ${color};" class="col-sm-5">Stars:</h5>
                 <div class="col-sm-2"></div>
-                <h5 style="padding: 15px; background-color: ${color};" class="col-sm-5">Learn more</h5>
+                <h5 style="padding: 15px; background-color: ${color};" class="col-sm-5">Following: ${data.following}</h5>
               </div>
+              <h3 style="text-align: center;">
+                <a style="text-align: center; color: ${color}" href="${data.blog}">User Blog</a>
+              </h3>
             </div>   
           </div>
           
