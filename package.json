@@ -19,6 +19,9 @@
   "homepage": "https://github.com/Aleshsparrow/Developer-Profile-Generator#readme",
   "dependencies": {
     "axios": "^0.19.1",
-    "inquirer": "^7.0.3"
+    "dotenv": "^8.2.0",
+    "electron": "^7.1.8",
+    "inquirer": "^7.0.3",
+    "open": "^7.0.0"
   }
 }

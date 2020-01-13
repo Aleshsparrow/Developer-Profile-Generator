@@ -32,7 +32,7 @@ inquirer
       .get(queryUrl)
       .then(function(res) {
         const data = res.data
-        console.log(data)
+        // console.log(data)
         // const data = res.data
         // for (var i = 0; i < data.length; i++){
         //   console.log(data[i])
