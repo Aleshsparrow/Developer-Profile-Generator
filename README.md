@@ -5,6 +5,8 @@ I wrote this program in order to be able to easily type in members' github usern
 
     I used the "inquirer" npm package to prompt user to enter favorite color and github user name. I passed the github user name to the github API call using the "axios" npm package. I used the result from the API call to append importent information to the page and also used the color input to personalize the page based on whatever color the user chooses.
 
+    Changing the html file to a pdf format is still work in progress.
+
 ## This is the end product assuming user chooses color green:
 ![loadedpage.png](./Assets/loadedpage.png)
 ![loadedpage2.png](./Assets/loadedpage2.png)
