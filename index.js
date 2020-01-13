@@ -1,10 +1,11 @@
 // Set up dependents (axios, inquirer, fs)
-const axios = require("axios")
-const inquirer = require("inquirer")
-const fs = require("fs"), 
-convertFactory = require('electron-html-to');
+const axios = require("axios");
+const inquirer = require("inquirer");
+const fs = require("fs");
+// const convertFactory = require('electron-html-to');
 const util = require("util");
 const writeFileAsync = util.promisify(fs.writeFile);
+const dotenv = require("dotenv").config()
 // Get URl for git hub call
 
 inquirer
@@ -61,7 +62,7 @@ inquirer
             
             <div  style="background-color: white;" class="jumbotron">
               <div class="text-center">
-                <img style="border-radius: 300px;" src="${data.avatar_url}" class="rounded" alt="Profile pic">
+                <img style="border-radius: 300px;"  class="rounded-circle" src="${data.avatar_url}" class="rounded" alt="Profile pic">
               </div>
               <h1 style="text-align: center;" class="display-4">Hello</h1>
               <p style="text-align: center;" class="lead">My name is ${data.name}</p>
@@ -70,7 +71,7 @@ inquirer
               <br>
               <h4 style="text-align: center;">${data.bio}</h4>
               <div style="text-align: center; color: white; " class="row">
-                <h5 style="padding: 15px; background-color: ${color};" class="col-sm-5">Public Repositories ${data.public_repos}</h5>
+                <h5 style="padding: 15px; background-color: ${color};" class="col-sm-5">Public Repositories: ${data.public_repos}</h5>
                 <div class="col-sm-2"></div>
                 <h5 style="padding: 15px; background-color: ${color};" class="col-sm-5">Followers: ${data.followers}</h5>
               </div>
@@ -95,22 +96,22 @@ inquirer
     
    
     })
-    .then(html => {
-      const conversion = convertFactory({
-        converterPath: convertFactory.converters.PDF
-      });
-      conversion({ html }, function(err, result) {
-        if (err) {
-          return console.error(err);
-        }
-        result.stream.pipe(
-          fs.createWriteStream(path.join(__dirname, "resume.pdf")),
+    // .then(html => {
+    //   const conversion = convertFactory({
+    //     converterPath: convertFactory.converters.PDF
+    //   });
+    //   conversion({ html }, function(err, result) {
+    //     if (err) {
+    //       return console.error(err);
+    //     }
+    //     result.stream.pipe(
+    //       fs.createWriteStream(path.join(__dirname, "resume.pdf")),
           
-        );
-        conversion.kill();
-      });
-      open(path.join(process.cwd(), "resume.pdf"));
-    });
+    //     );
+    //     conversion.kill();
+    //   });
+    //   open(path.join(process.cwd(), "resume.pdf"));
+    // });
 
 
           
